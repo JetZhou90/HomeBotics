@@ -1,13 +1,9 @@
 from PIL import Image
-import os.path
 import glob
 import numpy as np
-import KnnClassification as KC
+from HomeBotics import KnnClassification as KC
 import cv2
-import sys 
-from datetime import *
-import Image
-import random
+
 
 class FR:
     
@@ -66,10 +62,9 @@ class FR:
         #find faces
         faces=self.faceCascade.detectMultiScale(
             gray,
-            scaleFactor=1.4,
+            scaleFactor=1.3,
             minNeighbors=5,
-            minSize=(30,30),
-            flags=cv2.cv.CV_HAAR_SCALE_IMAGE
+            minSize=(20,20)
         )
         cls = []
         for(x, y, w, h) in faces:
@@ -89,7 +84,7 @@ class FR:
             img = self.convertImage(faceImage)
             
             #classify the face
-            cls.append(KC.knnClassify(img,np.array(self.imageList),self.labels,7))
+            cls.append(KC.knnClassify_cosSimilarity(img,np.array(self.imageList),self.labels,7))
         return cls
         
     #while True:

@@ -13,7 +13,7 @@ def knnClassify(test, train, labels, K):
     
     #sort the index with decreasing distance
     sortedDisIdx=np.argsort(distance)
-    print np.sort(distance)[1]-np.sort(distance)[0]
+    print (np.sort(distance)[1]-np.sort(distance)[0])
     if np.sort(distance)[1]-np.sort(distance)[0]>threshold:
         return "reject"
     #find the k nearest neighbours
@@ -22,7 +22,7 @@ def knnClassify(test, train, labels, K):
         for i in range(K):
             ith_label=labels[sortedDisIdx[i]]
             vote[ith_label]=vote.get(ith_label,0)+1
-            sortedvote=sorted(vote.iteritems(),key=lambda x:x[1], reverse=True)
+            sortedvote=sorted(vote.items(),key=lambda x:x[1], reverse=True)
             return sortedvote[0][0]
 
 def knnClassify_cosSimilarity(test,train,labels,K):
@@ -42,12 +42,12 @@ def knnClassify_cosSimilarity(test,train,labels,K):
     cosSimilarity = dotProduct/(lengthTest*lengthTrain)
     #Sort the index of cosSimilarity
     sortedSimIdx=np.argsort(-cosSimilarity)
-    print np.sort(cosSimilarity)[-1]-np.sort(cosSimilarity)[0]
+    print (np.sort(cosSimilarity)[-1]-np.sort(cosSimilarity)[0])
     #find the k nearest neighbors
     vote={}
     for i in range(K):
         ith_label = labels[sortedSimIdx[i]]
         vote[ith_label] = vote.get(ith_label,0)+1
-    sortedvote=sorted(vote.iteritems(),key=lambda x:x[1], reverse=True)
+    sortedvote=sorted(vote.items(),key=lambda x:x[1], reverse=True)
     return sortedvote[0][0]
     
