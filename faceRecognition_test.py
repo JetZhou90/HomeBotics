@@ -24,16 +24,16 @@ while True:
     if len(cls) > 0:
         #increase count
         count+=1
-        if cls[0]==1:
+        if cls[0]==0:
             print ("Found Juntao!")
             cnt1+=1;
-        elif cls[0]==2:
+        elif cls[0]==1:
             print ("Found Wentao!")
             cnt2+=1;
-        elif cls[0]==3:
+        elif cls[0]==2:
             print ("Found Xiaotong")
             cnt3+=1;
-        elif cls[0]==4:
+        elif cls[0]==3:
             print ("Found Yi")
             cnt4+=1;   
         else:
