@@ -81,7 +81,7 @@ with tf.name_scope('Train'):
     train_op = tf.train.AdamOptimizer(LR).minimize(loss)
 tf.summary.scalar('loss', loss)
 accuracy = tf.metrics.accuracy(  # return (acc, update_op), and create 2 local variables
-    labels=tf.argmax(tf_y, axis=1), predictions=tf.argmax(output, axis=1), name='accuracy')[1]
+    labels=tf.argmax(tf_y, axis=1), predictions=tf.argmax(tf.nn.softmax(output), axis=1), name='accuracy')[1]
 saver = tf.train.Saver()
 sess = tf.Session()
 init_op = tf.group(tf.global_variables_initializer(),
@@ -107,16 +107,14 @@ def cnn_train():
 
 def cnn_pre(t_x):
 
-    pre_y=tf.argmax(output,axis=1)
-
+    pre_y=tf.nn.softmax(output)
+    cls=tf.argmax(pre_y,axis=1)
     save_path_full = os.path.join(save_path, model_name)
     saver.restore(sess, save_path_full)
-
-    cls = sess.run(pre_y, {tf_x: t_x, tf_dropout: True, tf_bn: True})
-    return cls
+    cls_= sess.run(cls, {tf_x: t_x, tf_dropout: True, tf_bn: True})
+    return cls_
     # acc=sess.run(accuracy,{tf_x:t_x,tf_y:test_y,tf_dropout:True,tf_bn:True})
     # return acc
 
-cnn_train()
-
+print(cnn_pre(test_x))
 
